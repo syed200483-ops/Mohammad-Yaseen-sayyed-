@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Call - Free Calls Over Internet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .room-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .room-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e5e9;
+        }
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        .call-status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .status-waiting { background: #fff3cd; color: #856404; }
+        .status-connected { background: #d4edda; color: #155724; }
+        .status-copy {
+            background: #d1ecf1;
+            color: #0c5460;
+            cursor: pointer;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .hidden { display: none; }
+        video {
+            width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn-small {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📞 WiFi Call</h1>
+        <p>Call anyone with just WiFi!</p>
+        
+        <!-- Room Creation -->
+        <div id="createRoom">
+            <input type="text" class="room-input" id="roomId" placeholder="Enter room name (e.g., mycall123)" maxlength="20">
+            <button class="btn btn-primary" onclick="createRoom()">Create Room</button>
+            <div id="roomLink" class="status-copy hidden" onclick="copyRoomLink()"></div>
+        </div>
+
+        <!-- Call Interface -->
+        <div id="callInterface" class="hidden">
+            <div id="localVideoContainer"></div>
+            <div id="remoteVideoContainer"></div>
+            <div id="callStatus" class="call-status status-waiting hidden">Waiting for friend to join...</div>
+            <div class="controls">
+                <button class="btn btn-small btn-secondary" onclick="toggleMic()">🔇 Mic</button>
+                <button class="btn btn-small btn-secondary" onclick="toggleVideo()">📹 Video</button>
+                <button class="btn btn-small btn-secondary" onclick="endCall()">📞 End Call</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
